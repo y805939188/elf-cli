@@ -1,0 +1,31 @@
+{
+  "name": "elf-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "metalsmith-renamer": "^0.4.1"
+  },
+  "bin": {
+    "elf-cli": "./bin/www"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "chalk": "^3.0.0",
+    "commander": "^4.1.1",
+    "consolidate": "^0.15.1",
+    "download-git-repo": "^3.0.2",
+    "ejs": "^3.0.1",
+    "execa": "^4.0.0",
+    "inquirer": "^7.0.6",
+    "metalsmith": "^2.3.0",
+    "ora": "^4.0.3",
+    "readline": "^1.3.0"
+  }
+}

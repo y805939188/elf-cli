@@ -1,0 +1,5 @@
+{
+"hooks": {
+    "pre-commit": "echo \'这里是huskyrc提供的git 钩子\' "
+  }
+}
