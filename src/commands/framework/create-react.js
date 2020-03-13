@@ -7,7 +7,13 @@ const {
   executeCommand,
   downloadTemplate,
 } = require('../../utils');
-const { GIT_API: { GIT_REACT_TEMPLATE }, CACHE_DIRECTORY } = require('../../constants');
+const {
+  CACHE_DIRECTORY,
+  GIT_API: {
+    GIT_REACT_TEMPLATE,
+    GIT_REACT_TEMPLATE_PD4,
+  }
+} = require('../../constants');
 
 const FORCE_DOWNLOAD = [
   {
@@ -47,29 +53,30 @@ const installDependence = async (dest, { visualization, style }) => {
 }
 
 const FRAMEWORK = 'REACT_TEMPLATE';
+const FRAMEWORK_PD4 = 'REACT_TEMPLATE_PD4';
 const REACT_TEMPLATE_CACHE_PATH = path.join(CACHE_DIRECTORY, FRAMEWORK);
+const REACT_TEMPLATE_CACHE_PATH_PD4 = path.join(CACHE_DIRECTORY, FRAMEWORK_PD4);
 const CURRENT_PATH = path.join(process.cwd());
-const createReactWidget = async ({ name, author, visualization, style }) => {
+const createReactWidget = async ({ name, author, visualization, style }, isPd4) => {
   const CURRENT_WIDGET_PATH = path.join(CURRENT_PATH, name);
   const CUSTOM_OPTIONS = { widgetName: name, widgetAuthor: author, visualization, style };
-  if (!fs.existsSync(REACT_TEMPLATE_CACHE_PATH)) {
+  const CURRENT_DOWNLOAD_PATH = isPd4 ? GIT_REACT_TEMPLATE_PD4 : GIT_REACT_TEMPLATE;
+  const CURRENT_CACHE_PATH = isPd4 ? REACT_TEMPLATE_CACHE_PATH_PD4 : REACT_TEMPLATE_CACHE_PATH;
+  if (!fs.existsSync(CURRENT_CACHE_PATH)) {
     // 不存在该地址
-    const isSucceed = await downloadTemplate(GIT_REACT_TEMPLATE, REACT_TEMPLATE_CACHE_PATH);
+    const isSucceed = await downloadTemplate(CURRENT_DOWNLOAD_PATH, CURRENT_CACHE_PATH);
     if (isSucceed) {
-      const isSucceed = await reactGenerator(REACT_TEMPLATE_CACHE_PATH, CURRENT_WIDGET_PATH, CUSTOM_OPTIONS);
-      if (!isSucceed) return log('red', '生成模板发生意外而终止');
+      const generatored = await reactGenerator(CURRENT_CACHE_PATH, CURRENT_WIDGET_PATH, CUSTOM_OPTIONS);
+      if (!generatored) return log('red', '生成模板发生意外而终止');
       const depInstalled = await installDependence(CURRENT_WIDGET_PATH, { visualization, style });
       if (!depInstalled) return;
     }
     else log('red', '下载模板失败, 原因未知');
   } else {
     const { isDownload } = await inquirer.prompt(FORCE_DOWNLOAD);
-    if (isDownload) await downloadTemplate(GIT_REACT_TEMPLATE, REACT_TEMPLATE_CACHE_PATH);
-    const isSucceed = await reactGenerator(REACT_TEMPLATE_CACHE_PATH, CURRENT_WIDGET_PATH, CUSTOM_OPTIONS);
-
-    // const isSucceed = await reactGenerator('/Users/dingyubo/Desktop/my-cli/temporary', CURRENT_WIDGET_PATH, CUSTOM_OPTIONS);
+    if (isDownload) await downloadTemplate(CURRENT_DOWNLOAD_PATH, CURRENT_CACHE_PATH);
+    const isSucceed = await reactGenerator(CURRENT_CACHE_PATH, CURRENT_WIDGET_PATH, CUSTOM_OPTIONS);
     if (!isSucceed) return log('red', '生成模板发生意外而终止');
-    // return
     const depInstalled = await installDependence(CURRENT_WIDGET_PATH, { visualization, style });
     if (!depInstalled) return;
     log('green', '依赖安装完成');

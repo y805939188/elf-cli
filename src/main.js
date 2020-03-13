@@ -18,6 +18,7 @@ Object.entries(actions).forEach(([key, value]) => {
     .command(key)
     .description(value.description)
     .alias(value.alias)
+    .option('-pd4, --pd4', '加 --pd4 这个参数后会拉取内部组件的模板')
     .action(() => {
       if (key === '*') {
         console.log('错误的命令');

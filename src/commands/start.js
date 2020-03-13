@@ -90,7 +90,8 @@ const start = async (args) => {
     `Widget将 ${visualization ? `使用${visualization}` : '不使用可视化工具' }`,
   );
   try {
-    require(path.join(__dirname, 'framework', `create-${framework}`))({name, author, style, visualization});
+    const isPrd4 = args.find(item => item === '--pd4');
+    require(path.join(__dirname, 'framework', `create-${framework}`))({name, author, style, visualization}, isPrd4 && true);
   } catch (err) {
     console.log('发生了错误', err);
   }

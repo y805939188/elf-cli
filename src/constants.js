@@ -2,6 +2,7 @@
 const GIT_REPOS = 'https://api.github.com/users/y805939188/repos';
 // const GIT_REACT_TEMPLATE = 'https://api.github.com/repos/y805939188/unstable_react_widget_template';
 const GIT_REACT_TEMPLATE = 'github.com:y805939188/unstable_react_widget_template';
+const GIT_REACT_TEMPLATE_PD4 = 'github.com:y805939188/unstable_react_widget_template#master-pd4';
 const GIT_VUE_TEMPLATE = '';
 const GIT_ANGULAR_TEMPLATE =  '';
 
@@ -14,6 +15,7 @@ module.exports = {
   GIT_API: {
     GIT_REPOS,
     GIT_REACT_TEMPLATE,
+    GIT_REACT_TEMPLATE_PD4,
     GIT_VUE_TEMPLATE,
     GIT_ANGULAR_TEMPLATE,
   },
