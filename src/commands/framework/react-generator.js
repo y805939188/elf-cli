@@ -16,11 +16,18 @@ const reactGenerator = async (origin, dest, CUSTOM_OPTIONS) => {
       .destination(dest) // 输出的目的地
       .ignore(['node_modules', '.git'])
       .use((files, metal, done) => {
-        // 干掉不需要的文件
+        // 干掉不需要的文件 临时办法 之后再改成更auto
         if (visualization === 'D3') {
           delete files['src/echarts.img.tsx'];
           delete files['src/echarts.tsx'];
           delete files['src/index.tsx'];
+          delete files['src/service/index.tsx'];
+          delete files['src/components/train-process/index.tsx'];
+          delete files['src/components/train-process/training-process-tab.tsx'];
+          delete files['src/components/train-process/index.css.ejs'];
+          delete files['src/components/train-process/conf/auc.tsx'];
+          delete files['src/components/train-process/conf/axis.tsx'];
+          delete files['src/components/train-process/conf/logloss.tsx'];
         } else if (visualization === 'Echarts') {
           delete files['src/d3-widget.tsx'];
           delete files['src/index.tsx'];
@@ -28,6 +35,13 @@ const reactGenerator = async (origin, dest, CUSTOM_OPTIONS) => {
           delete files['src/echarts.img.tsx'];
           delete files['src/echarts.tsx'];
           delete files['src/d3-widget.tsx'];
+          delete files['src/service/index.tsx'];
+          delete files['src/components/train-process/index.tsx'];
+          delete files['src/components/train-process/training-process-tab.tsx'];
+          delete files['src/components/train-process/index.css.ejs'];
+          delete files['src/components/train-process/conf/auc.tsx'];
+          delete files['src/components/train-process/conf/axis.tsx'];
+          delete files['src/components/train-process/conf/logloss.tsx'];
         }
         done();
       })
