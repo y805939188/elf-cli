@@ -15,6 +15,22 @@ const reactGenerator = async (origin, dest, CUSTOM_OPTIONS) => {
       .source(origin) // 所以需要传个source 传了source之后 上面传的那个路径就没用了
       .destination(dest) // 输出的目的地
       .ignore(['node_modules', '.git'])
+      .use((files, metal, done) => {
+        // 干掉不需要的文件
+        if (visualization === 'D3') {
+          delete files['src/echarts.img.tsx'];
+          delete files['src/echarts.tsx'];
+          delete files['src/index.tsx'];
+        } else if (visualization === 'Echarts') {
+          delete files['src/d3-widget.tsx'];
+          delete files['src/index.tsx'];
+        } else if (visualization === null) {
+          delete files['src/echarts.img.tsx'];
+          delete files['src/echarts.tsx'];
+          delete files['src/d3-widget.tsx'];
+        }
+        done();
+      })
       .use(renamer({
         // 把预置的d3或者echarts的example重命名
         filesToRename: {
@@ -29,20 +45,6 @@ const reactGenerator = async (origin, dest, CUSTOM_OPTIONS) => {
           }
         }
       }))
-      .use((files, metal, done) => {
-        // 干掉不需要的文件
-        if (visualization === 'D3') {
-          delete files['src/echarts.img.tsx'];
-          delete files['src/echarts.tsx'];
-        } else if (visualization === 'Echarts') {
-          delete files['src/d3-widget.tsx'];
-        } else if (visualization === null) {
-          delete files['src/echarts.img.tsx'];
-          delete files['src/echarts.tsx'];
-          delete files['src/d3-widget.tsx'];
-        }
-        done();
-      })
       .use((files, metal, done) => {
         // 处理webpack中的样式预处理语言的配置
         Object.entries(files).forEach(async ([ fileName, file ]) => {

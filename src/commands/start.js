@@ -50,8 +50,8 @@ const WIDGET_INFO_PROMPT_LIST = [
     name: 'visualization',
     default: null,
     choices: [
-      'D3',
       'Echarts',
+      'D3',
       '不使用',
     ],
     filter: val => val === '不使用' ? null : val,
